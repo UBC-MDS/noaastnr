@@ -2,15 +2,16 @@ Package: noaastnr
 Title: R package that downloads, processes and visualizes weather data from NOAA website
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Chen",
+    c(person(given = "Chen",
            family = "Zhao",
-           role = c("aut", "cre")), 
-    person(given = "Chirag",
+           role = c("aut", "cre"),
+           email = "cz2020@student.ubc.ca"),
+      person(given = "Chirag",
            family = "Rank",
-           role = c("aut", "cre")), 
-    person(given = "Steffen",
+           role = "aut"),
+      person(given = "Steffen",
            family = "Pentelow",
-           role = c("aut", "cre"))
+           role = "aut"))
 Description: The US National Oceanic and Atmospheric Administration (NOAA) collects and provides access to weather data from land-based weather stations within the US and around the world. One method for accessing these data is through a publically accessible FTP site.  This package allows users to easily download data from a given station for a given year, extract several key weather parameters from the raw data files, and visualize the variation in these parameters over time. 
 License: MIT + file LICENSE
 Encoding: UTF-8
