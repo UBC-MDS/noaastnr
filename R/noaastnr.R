@@ -1,17 +1,16 @@
-#' Get stations' information
+#' Get stations information
 #'
 #' Downloads and cleans the data of all stations available at
 #' 'ftp://ftp.ncei.noaa.gov/pub/data/noaa/'.
 #'
-#' @param country factor, optional
-#' @param path factor, optional
+#' @param country character, optional
 #'
 #' @return data.frame
 #' @export
 #'
 #' @examples
-#' get_stations_info(country = "US", path = "home/project/")
-get_stations_info <- function(country = "US", path = NULL) {
+#' get_stations_info(country = "US")
+get_stations_info <- function(country = "all") {
 
 }
 
@@ -40,7 +39,7 @@ get_stations_info <- function(country = "US", path = NULL) {
 #'
 #' @examples
 #' get_weather_data('911650-22536', 2020)
-get_weather_data <- function(station_number, year,) {
+get_weather_data <- function(station_number, year) {
 
 }
 
