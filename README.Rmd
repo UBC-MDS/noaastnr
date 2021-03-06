@@ -50,7 +50,7 @@ devtools::install_github("UBC-MDS/noaastnr")
 
 ## Related Packages
 
-There are few packages in the R ecosystem like...
+The package [`rnoaa`](https://cran.r-project.org/web/packages/rnoaa/index.html) provides extensive functionality for interfacing with the NOAA's data systems including their [APIs](https://www.ncei.noaa.gov/support/access-data-service-api-user-documentation) and [FTP](ftp://ftp.ncei.noaa.gov/) service.  The `noaastnr` package is a lightweight alternative to the `rnoaa` package which provides access to a specific subset of NOAA data, namely, their Integrated Surface Database (historical global hourly weather data) through their FTP service.
 
 ## Code of Conduct
 
