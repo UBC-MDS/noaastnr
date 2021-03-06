@@ -2,22 +2,20 @@
 % Please edit documentation in R/noaastnr.R
 \name{get_stations_info}
 \alias{get_stations_info}
-\title{Get stations' information}
+\title{Get stations information}
 \usage{
-get_stations_info(country = "US", path = NULL)
+get_stations_info(country = "all")
 }
 \arguments{
-\item{country}{factor, optional}
-
-\item{path}{factor, optional}
+\item{country}{character, optional}
 }
 \value{
 data.frame
 }
 \description{
 Downloads and cleans the data of all stations available at
-'ftp://ftp.ncei.noaa.gov/pub/data/noaa/'.
+\url{ftp://ftp.ncei.noaa.gov/pub/data/noaa}.
 }
 \examples{
-get_stations_info(country = "US", path = "home/project/")
+get_stations_info(country = "US")
 }

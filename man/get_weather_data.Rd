@@ -4,14 +4,12 @@
 \alias{get_weather_data}
 \title{Get weather data}
 \usage{
-get_weather_data(station_number, year, path = NULL)
+get_weather_data(station_number, year)
 }
 \arguments{
-\item{station_number}{factor}
+\item{station_number}{character}
 
 \item{year}{integer}
-
-\item{path}{factor, optional}
 }
 \value{
 data.frame
@@ -19,9 +17,20 @@ data.frame
 \description{
 Loads and cleans weather data for a given NOAA station ID and year.
 Returns a dataframe containing a time series of air temperature,
-atmospheric pressure, wind speed, and wind direction. Also saves a copy of
-the raw data file downloaded from the NOAA FTP server at
-'ftp.ncei.noaa.gov/pub/data/noaa/'.
+atmospheric pressure, wind speed, and wind direction the NOAA FTP server at
+<ftp.ncei.noaa.gov/pub/data/noaa/>.
+}
+\details{
+\code{station_number} is a combination of the USAF station ID and the NCDC
+WBAN number in the form '(USAF ID)-(WBAN ID)'.  If a WBAN ID does not
+exist, a value of '99999' should be used in its place.
+\itemize{
+\item Example with WBAN ID - '911650-22536'
+\item Example without WBAN ID - '010015-99999'
+Station numbers can be found in the dataframe returned by
+\code{get_stations_info()} or through the NOAA's graphical tool at
+\url{https://gis.ncdc.noaa.gov/maps/ncei/cdo/hourly}
+}
 }
 \examples{
 get_weather_data('911650-22536', 2020)
