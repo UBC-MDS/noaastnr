@@ -4,12 +4,12 @@
 \alias{plot_weather_data}
 \title{Plot weather data}
 \usage{
-plot_weather_data(observations_df, y_axis, time_basis)
+plot_weather_data(obs_df, col_name, time_basis)
 }
 \arguments{
-\item{observations_df}{data.frame}
+\item{obs_df}{data.frame}
 
-\item{y_axis}{factor}
+\item{col_name}{factor}
 
 \item{time_basis}{factor}
 }
@@ -21,5 +21,5 @@ Visualizes the weather station observations including air temperature,
 atmospheric pressure, wind speed, and wind direction changing over time.
 }
 \examples{
-plot_weather_data(observations_df, y_axis = airtemp, time_basis = monthly)
+plot_weather_data(obs_df, col_name = air_temp, time_basis = monthly)
 }
