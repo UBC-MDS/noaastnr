@@ -19,20 +19,28 @@ get_stations_info <- function(country = "US", path = NULL) {
 #'
 #' Loads and cleans weather data for a given NOAA station ID and year.
 #' Returns a dataframe containing a time series of air temperature,
-#' atmospheric pressure, wind speed, and wind direction. Also saves a copy of
-#' the raw data file downloaded from the NOAA FTP server at
+#' atmospheric pressure, wind speed, and wind direction the NOAA FTP server at
 #' 'ftp.ncei.noaa.gov/pub/data/noaa/'.
 #'
-#' @param station_number factor
+#' @param station_number character
 #' @param year integer
-#' @param path factor, optional
 #'
 #' @return data.frame
 #' @export
 #'
+#' @details
+#' `station_number` is a combination of the USAF station ID and the NCDC
+#' WBAN number in the form '<USAF ID>-<WBAN ID>'.  If a WBAN ID does not
+#' exist, a value of '99999' should be used in its place.
+#' * Example with WBAN ID - '911650-22536'
+#' * Example without WBAN ID - '010015-99999'
+#' Station numbers can be found in the dataframe returned by
+#' `get_stations_info()` or through the NOAA's graphical tool at
+#'  https://gis.ncdc.noaa.gov/maps/ncei/cdo/hourly
+#'
 #' @examples
 #' get_weather_data('911650-22536', 2020)
-get_weather_data <- function(station_number, year, path = NULL) {
+get_weather_data <- function(station_number, year,) {
 
 }
 
