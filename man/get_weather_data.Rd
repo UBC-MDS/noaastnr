@@ -33,5 +33,5 @@ Station numbers can be found in the dataframe returned by
 }
 }
 \examples{
-get_weather_data('911650-22536', 2020)
+get_weather_data('911803-99999', 2015)
 }
