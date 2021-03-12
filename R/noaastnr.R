@@ -38,25 +38,25 @@ get_stations_info <- function(country = "all") {
 #' <https://gis.ncdc.noaa.gov/maps/ncei/cdo/hourly>
 #'
 #' @examples
-#' get_weather_data('911650-22536', 2020)
+#' get_weather_data('911803-99999', 2015)
 get_weather_data <- function(station_number, year) {
 
   # Exception handling
-  test_that("Year must be entered as a numer", {
-    expect_equal(class(year), "numeric")
+  testthat::test_that("Year must be entered as a number", {
+    testthat::expect_equal(class(year), "numeric")
   })
-  test_that("Station number must be entered as a string", {
-    expect_equal(class(station_number), "character")
+  testthat::test_that("Station number must be entered as a string", {
+    testthat::expect_equal(class(station_number), "character")
   })
-  test_that(
+  testthat::test_that(
     "Station number must be entered in form '911650-22536'.  See documentation for additional details.",
     {
-      expect_equal(stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$"),
+      testthat::expect_equal(stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$"),
                    TRUE)
     }
   )
 
-
+  # Build file and path names
   filename <- paste0(station_number, "-" , toString(year), ".gz")
   full_path <-
     paste0("ftp.ncei.noaa.gov/pub/data/noaa/", toString(year), "/")
@@ -89,7 +89,7 @@ get_weather_data <- function(station_number, year) {
   for (i in seq_along(data)) {
     stn_year_df <- tibble::add_row(
       stn_year_df,
-      stn = 'a',
+      stn = station_number,
       datetime = lubridate::ymd_hm(as.numeric(substr(data[i], 16, 27))),
       air_temp = as.numeric(substr(data[i], 88, 92)),
       atm_press = as.numeric(substr(data[i], 100, 104)) / 10,
@@ -98,6 +98,11 @@ get_weather_data <- function(station_number, year) {
     )
   }
 
+  stn_year_df[stn_year_df == 999] <- NA
+  stn_year_df[stn_year_df == 999.9] <- NA
+  stn_year_df[stn_year_df == 9999.9] <- NA
+
+  stn_year_df
 }
 
 #' Plot weather data
