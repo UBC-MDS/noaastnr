@@ -1,6 +1,6 @@
 station_number <-  "911803-99999"
 year <- 2015
-weather_df <- noaastnr.get_weather_data(station_number, year)
+weather_df <- get_weather_data(station_number, year)
 
 test_that("Weather data should be returned as a tibble.", {
 expect_equal(class(weather_df)[1],"tbl_df")
@@ -27,5 +27,5 @@ test_that("Datetime columns should be represented as date time objects.", {
 })
 
 test_that("The only station number in the data table should be station_number", {
-  expect_equal(distinct(weather_df,stn)$stn,station_number)
+  expect_equal(dplyr::distinct(weather_df,stn)$stn,station_number)
 })
