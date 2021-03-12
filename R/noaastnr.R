@@ -41,6 +41,63 @@ get_stations_info <- function(country = "all") {
 #' get_weather_data('911650-22536', 2020)
 get_weather_data <- function(station_number, year) {
 
+  # Exception handling
+  test_that("Year must be entered as a numer", {
+    expect_equal(class(year), "numeric")
+  })
+  test_that("Station number must be entered as a string", {
+    expect_equal(class(station_number), "character")
+  })
+  test_that(
+    "Station number must be entered in form '911650-22536'.  See documentation for additional details.",
+    {
+      expect_equal(stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$"),
+                   TRUE)
+    }
+  )
+
+
+  filename <- paste0(station_number, "-" , toString(year), ".gz")
+  full_path <-
+    paste0("ftp.ncei.noaa.gov/pub/data/noaa/", toString(year), "/")
+  file_url <- paste0(full_path, filename)
+
+  # Download compressed weather station data
+  if (RCurl::url.exists(file_url)) {
+    compressed_data <- RCurl::getBinaryURL(file_url)
+  }
+
+  # Decompress weather data
+  data <-
+    unlist(strsplit(
+      memDecompress(compressed_data, type = 'gzip', asChar = TRUE),
+      '\n'
+    ))
+
+  # Create data frame for weather observations
+  stn_year_df <-
+    tibble::tibble(
+      stn = character(),
+      datetime = as.POSIXct(NA),
+      air_temp = numeric(),
+      atm_press = numeric(),
+      wind_spd = numeric(),
+      wind_dir = numeric()
+    )
+
+  # Populate weather observations data frame from raw data
+  for (i in seq_along(data)) {
+    stn_year_df <- tibble::add_row(
+      stn_year_df,
+      stn = 'a',
+      datetime = lubridate::ymd_hm(as.numeric(substr(data[i], 16, 27))),
+      air_temp = as.numeric(substr(data[i], 88, 92)),
+      atm_press = as.numeric(substr(data[i], 100, 104)) / 10,
+      wind_spd = as.numeric(substr(data[i], 66, 69)) / 10,
+      wind_dir = as.numeric(substr(data[i], 61, 63))
+    )
+  }
+
 }
 
 #' Plot weather data
