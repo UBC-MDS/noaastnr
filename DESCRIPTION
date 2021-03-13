@@ -32,4 +32,5 @@ Imports:
     ggplot2,
     tidyr,
     rlang,
-    readr
+    readr,
+    utils
