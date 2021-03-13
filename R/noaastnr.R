@@ -3,15 +3,45 @@
 #' Downloads and cleans the data of all stations available at
 #' <ftp://ftp.ncei.noaa.gov/pub/data/noaa>.
 #'
-#' @param country character, optional
+#' @param country_id character, optional
 #'
 #' @return data.frame
 #' @export
 #'
 #' @examples
-#' get_stations_info(country = "US")
-get_stations_info <- function(country = "all") {
+#' get_stations_info(country_id = "US")
+get_stations_info <- function(country_id = "all") {
 
+  if (!is.character(country_id)){
+    stop("Country code must be entered as a string of length 2")
+  }
+
+  if (country_id != "all" & nchar(country_id) != 2){
+    stop("Country code must be of length 2")
+  }
+
+  ftp_address <- "ftp.ncei.noaa.gov/"
+  ftp_dir <- "pub/data/noaa/"
+  ftp_file_name <- "isd-history.txt"
+  local_file_name = "noaa.txt"
+  ftp_path = paste(ftp_address, ftp_dir, ftp_file_name, sep="")
+  download.file(ftp_path, destfile = local_file_name)
+
+  column_names <- c("usaf", "wban", "station_name", "country", "state", "call", "latitude", "longitude", "elevation", "start", "end")
+  column_start <- c(1, 8, 14, 44, 49, 52, 58, 66, 75, 83, 92)
+  column_end <- c(7, 13, 43, 48, 51, 57, 65, 74, 82, 91, 101)
+  column_param <- readr::fwf_positions(column_start, column_end , column_names)
+  column_datatype <- readr::cols("c", "c", "c", "c", "c", "c", "c", "c", "c", "T", "T")
+  skip_lines <- 22
+
+  suppressWarnings(data <- readr::read_fwf(local_file_name, col_positions = column_param, col_types =column_datatype ,skip = skip_lines))
+  file.remove(local_file_name)
+
+  if (country_id != "all"){
+    data <- dplyr::filter(data, country==country_id)
+  }
+
+  data
 }
 
 #' Get weather data
