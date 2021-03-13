@@ -18,7 +18,7 @@ data.frame
 Loads and cleans weather data for a given NOAA station ID and year.
 Returns a dataframe containing a time series of air temperature,
 atmospheric pressure, wind speed, and wind direction the NOAA FTP server at
-<ftp.ncei.noaa.gov/pub/data/noaa/>.
+\url{ftp://ftp.ncei.noaa.gov/pub/data/noaa/}.
 }
 \details{
 \code{station_number} is a combination of the USAF station ID and the NCDC

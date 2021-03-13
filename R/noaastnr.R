@@ -11,34 +11,56 @@
 #' @examples
 #' get_stations_info(country_id = "US")
 get_stations_info <- function(country_id = "all") {
-
-  if (!is.character(country_id)){
+  if (!is.character(country_id)) {
     stop("Country code must be entered as a string of length 2")
   }
 
-  if (country_id != "all" & nchar(country_id) != 2){
+  if (country_id != "all" & nchar(country_id) != 2) {
     stop("Country code must be of length 2")
   }
 
-  ftp_address <- "ftp.ncei.noaa.gov/"
+  ftp_address <- "ftp://ftp.ncei.noaa.gov/"
   ftp_dir <- "pub/data/noaa/"
   ftp_file_name <- "isd-history.txt"
   local_file_name = "noaa.txt"
-  ftp_path = paste(ftp_address, ftp_dir, ftp_file_name, sep="")
+  ftp_path = paste(ftp_address, ftp_dir, ftp_file_name, sep = "")
   utils::download.file(ftp_path, destfile = local_file_name)
 
-  column_names <- c("usaf", "wban", "station_name", "country", "state", "call", "latitude", "longitude", "elevation", "start", "end")
+  column_names <-
+    c(
+      "usaf",
+      "wban",
+      "station_name",
+      "country",
+      "state",
+      "call",
+      "latitude",
+      "longitude",
+      "elevation",
+      "start",
+      "end"
+    )
   column_start <- c(1, 8, 14, 44, 49, 52, 58, 66, 75, 83, 92)
   column_end <- c(7, 13, 43, 48, 51, 57, 65, 74, 82, 91, 101)
-  column_param <- readr::fwf_positions(column_start, column_end , column_names)
-  column_datatype <- readr::cols("c", "c", "c", "c", "c", "c", "c", "c", "c", "T", "T")
+  column_param <-
+    readr::fwf_positions(column_start, column_end , column_names)
+  column_datatype <-
+    readr::cols("c", "c", "c", "c", "c", "c", "c", "c", "c", "T", "T")
   skip_lines <- 22
 
-  suppressWarnings(data <- readr::read_fwf(local_file_name, col_positions = column_param, col_types =column_datatype ,skip = skip_lines))
+  suppressWarnings(
+    data <-
+      readr::read_fwf(
+        local_file_name,
+        col_positions = column_param,
+        col_types = column_datatype ,
+        skip = skip_lines
+      )
+  )
   file.remove(local_file_name)
 
-  if (country_id != "all"){
-    data <- dplyr::filter(data, country==country_id)
+  if (country_id != "all") {
+    data <- dplyr::filter(data, country == country_id)
   }
 
   data
@@ -49,7 +71,7 @@ get_stations_info <- function(country_id = "all") {
 #' Loads and cleans weather data for a given NOAA station ID and year.
 #' Returns a dataframe containing a time series of air temperature,
 #' atmospheric pressure, wind speed, and wind direction the NOAA FTP server at
-#' <ftp.ncei.noaa.gov/pub/data/noaa/>.
+#' <ftp://ftp.ncei.noaa.gov/pub/data/noaa/>.
 #'
 #' @param station_number character
 #' @param year integer
@@ -71,14 +93,16 @@ get_stations_info <- function(country_id = "all") {
 #' get_weather_data('911803-99999', 2015)
 get_weather_data <- function(station_number, year) {
   # Exception handling
-  if(!is.numeric(year)) {
+  if (!is.numeric(year)) {
     stop("Year must be entered as a number.")
   }
-  if(!is.character(station_number)) {
+  if (!is.character(station_number)) {
     stop("Station number must be entered as a string.")
   }
-  if(!stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$")) {
-    stop("Station number must be entered in form '911650-22536'.  See documentation for additional details.")
+  if (!stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$")) {
+    stop(
+      "Station number must be entered in form '911650-22536'.  See documentation for additional details."
+    )
   }
 
   # Build file and path names
@@ -160,13 +184,12 @@ plot_weather_data <- function(obs_df, col_name, time_basis) {
     stop("Time basis must be entered as a factor.")
   }
   # Test edge cases
-  testthat::test_that("Variable can only be one of air_temp, atm_press, wind_spd or wind_dir",
-                      {
-                        testthat::expect_true(col_name %in% c("air_temp", "atm_press", "wind_spd", "wind_dir"))
-                      })
-  testthat::test_that("Time basis can only be monthly or daily", {
-    testthat::expect_true(time_basis %in% c("monthly", "daily"))
-  })
+  if (!col_name %in% c("air_temp", "atm_press", "wind_spd", "wind_dir")) {
+    stop("Variable can only be one of air_temp, atm_press, wind_spd or wind_dir")
+  }
+  if (!time_basis %in% c("monthly", "daily")) {
+    stop("Time basis can only be monthly or daily")
+  }
 
   df <- obs_df
   df <- tidyr::drop_na(df)
