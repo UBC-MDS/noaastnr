@@ -28,4 +28,7 @@ Imports:
     stringr,
     lubridate,
     dplyr,
-    tibble
+    tibble,
+    ggplot2,
+    tidyr,
+    rlang
