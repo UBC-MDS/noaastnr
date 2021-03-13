@@ -22,7 +22,8 @@ get_stations_info <- function(country_id = "all") {
   ftp_address <- "ftp://ftp.ncei.noaa.gov/"
   ftp_dir <- "pub/data/noaa/"
   ftp_file_name <- "isd-history.txt"
-  local_file_name = "noaa.txt"
+  local_file_name <-  "noaa.txt"
+  country <- NULL
   ftp_path = paste(ftp_address, ftp_dir, ftp_file_name, sep = "")
   utils::download.file(ftp_path, destfile = local_file_name)
 
