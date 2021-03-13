@@ -71,19 +71,15 @@ get_stations_info <- function(country_id = "all") {
 #' get_weather_data('911803-99999', 2015)
 get_weather_data <- function(station_number, year) {
   # Exception handling
-  testthat::test_that("Year must be entered as a number", {
-    testthat::expect_equal(class(year), "numeric")
-  })
-  testthat::test_that("Station number must be entered as a string", {
-    testthat::expect_equal(class(station_number), "character")
-  })
-  testthat::test_that(
-    "Station number must be entered in form '911650-22536'.  See documentation for additional details.",
-    {
-      testthat::expect_equal(stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$"),
-                             TRUE)
-    }
-  )
+  if(!is.numeric(year)) {
+    stop("Year must be entered as a number.")
+  }
+  if(!is.character(station_number)) {
+    stop("Station number must be entered as a string.")
+  }
+  if(!stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$")) {
+    stop("Station number must be entered in form '911650-22536'.  See documentation for additional details.")
+  }
 
   # Build file and path names
   filename <- paste0(station_number, "-" , toString(year), ".gz")
