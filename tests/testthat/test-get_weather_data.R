@@ -29,3 +29,12 @@ test_that("Datetime columns should be represented as date time objects.", {
 test_that("The only station number in the data table should be station_number", {
   expect_equal(dplyr::distinct(weather_df,stn)$stn,station_number)
 })
+
+test_that("Test failed for checking 'year' param type", {
+  expect_error(get_weather_data('999999-99999','2015'), "Year must be entered as a number.")
+})
+
+test_that("Test failed for checking 'station_number' param type", {
+  expect_error(get_weather_data('999999-999992',2015), "Station number must be entered in form '911650-22536'.  See documentation for additional details.")
+  expect_error(get_weather_data(99999999999,2015), "Station number must be entered as a string.")
+})
