@@ -31,4 +31,6 @@ Imports:
     tibble,
     ggplot2,
     tidyr,
-    rlang
+    rlang,
+    readr,
+    utils

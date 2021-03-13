@@ -4,10 +4,10 @@
 \alias{get_stations_info}
 \title{Get stations information}
 \usage{
-get_stations_info(country = "all")
+get_stations_info(country_id = "all")
 }
 \arguments{
-\item{country}{character, optional}
+\item{country_id}{character, optional}
 }
 \value{
 data.frame
@@ -17,5 +17,5 @@ Downloads and cleans the data of all stations available at
 \url{ftp://ftp.ncei.noaa.gov/pub/data/noaa}.
 }
 \examples{
-get_stations_info(country = "US")
+get_stations_info(country_id = "US")
 }
