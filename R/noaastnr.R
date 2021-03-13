@@ -25,7 +25,7 @@ get_stations_info <- function(country_id = "all") {
   ftp_file_name <- "isd-history.txt"
   local_file_name = "noaa.txt"
   ftp_path = paste(ftp_address, ftp_dir, ftp_file_name, sep="")
-  download.file(ftp_path, destfile = local_file_name)
+  utils::download.file(ftp_path, destfile = local_file_name)
 
   column_names <- c("usaf", "wban", "station_name", "country", "state", "call", "latitude", "longitude", "elevation", "start", "end")
   column_start <- c(1, 8, 14, 44, 49, 52, 58, 66, 75, 83, 92)
