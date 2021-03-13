@@ -83,3 +83,78 @@ test_that("plot should use geom_line", {
   expect_true("GeomLine" %in% c(class(plot_ws_d$layers[[1]]$geom)))
   expect_true("GeomLine" %in% c(class(plot_wd_d$layers[[1]]$geom)))
 })
+
+# Test input data type
+
+test_that("Test failed for checking input param type", {
+  expect_error(
+    plot_weather_data(
+      obs_df = 1,
+      col_name = "air_temp",
+      time_basis = "monthly"
+    ),
+    "Weather data should be a dataFrame."
+  )
+  expect_error(
+    plot_weather_data(
+      obs_df = weather_df,
+      col_name = 1,
+      time_basis = "monthly"
+    ),
+    "Variable name must be entered as a factor."
+  )
+  expect_error(
+    plot_weather_data(
+      obs_df = weather_df,
+      col_name = "air_temp",
+      time_basis = 1
+    ),
+    "Time basis must be entered as a factor."
+  )
+})
+
+# Test input value
+
+test_that("Test failed for checking input values", {
+  expect_error(
+    plot_weather_data(
+      obs_df = weather_df,
+      col_name = "test",
+      time_basis = "monthly"
+    ),
+    "Variable can only be one of air_temp, atm_press, wind_spd or wind_dir"
+  )
+  expect_error(
+    plot_weather_data(
+      obs_df = weather_df,
+      col_name = "air_temp",
+      time_basis = "test"
+    ),
+    "Time basis can only be monthly or daily"
+  )
+})
+
+# Test input data set size
+
+station_number <-  "714950-99999"
+year <- 2004
+weather_df_size_test <- get_weather_data(station_number, year)
+
+test_that("Test failed for checking input data set size", {
+  expect_error(
+    plot_weather_data(
+      obs_df = weather_df_size_test,
+      col_name = "air_temp",
+      time_basis = "monthly"
+    ),
+    "Dataset is not sufficient to visualize."
+  )
+  expect_error(
+    plot_weather_data(
+      obs_df = weather_df_size_test,
+      col_name = "air_temp",
+      time_basis = "daily"
+    ),
+    "Dataset is not sufficient to visualize."
+  )
+})
