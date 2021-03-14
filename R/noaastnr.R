@@ -194,9 +194,6 @@ plot_weather_data <- function(obs_df, col_name, time_basis) {
 
   df <- obs_df
   df <- tidyr::drop_na(df)
-  if (nrow(df) < 3) {
-    stop("Dataset is not sufficient to visualize.")
-  }
   year <-
     lubridate::year(lubridate::floor_date(df$datetime, "year")[1])
 
