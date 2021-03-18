@@ -113,14 +113,12 @@ get_weather_data <- function(station_number, year) {
   file_url <- paste0(full_path, filename)
 
   # Download compressed weather station data
-  if (RCurl::url.exists(file_url)) {
-    compressed_data <- RCurl::getBinaryURL(file_url)
-  }
+  compressed_data <- curl::curl_fetch_memory(file_url)
 
   # Decompress weather data
   data <-
     unlist(strsplit(
-      memDecompress(compressed_data, type = 'gzip', asChar = TRUE),
+      memDecompress(compressed_data$content, type = 'gzip', asChar = TRUE),
       '\n'
     ))
 

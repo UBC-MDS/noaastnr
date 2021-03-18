@@ -34,5 +34,4 @@ Imports:
     tidyr,
     rlang,
     readr,
-    utils,
-    RCurl
+    utils
