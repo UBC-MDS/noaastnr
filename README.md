@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![R build
+status](https://github.com/UBC-MDS/noaastnr/workflows/R-CMD-check/badge.svg)](https://github.com/UBC-MDS/noaastnr/actions)
+[![codecov](https://codecov.io/gh/UBC-MDS/noaastnr/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/noaastnr)
 <!-- badges: end -->
 
 The US National Oceanic and Atmospheric Administration (NOAA) collects
