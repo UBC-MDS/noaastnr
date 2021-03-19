@@ -1,0 +1,90 @@
+---
+title: "noaastnr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{noaastnr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The US National Oceanic and Atmospheric Administration (NOAA) collects
+and provides access to weather data from land-based weather stations
+within the US and around the world ([Land-Based Station
+Data](https://www.ncdc.noaa.gov/data-access/land-based-station-data)).
+One method for accessing these data is through a publically accessible
+FTP site. This package allows users to easily download data from a given
+station for a given year, extract several key weather parameters from
+the raw data files, and visualize the variation in these parameters over
+time. The weather parameters that are extracted with this package are:
+
+  - Air Temperature (degrees Celsius)
+  - Atmospheric Pressure (hectopascals)
+  - Wind Speed (m/s)
+  - Wind Direction (angular degrees)
+  
+## Package Features
+
+  - `get_stations_info`:
+      - This function downloads and cleans the data of all stations
+        available at <ftp://ftp.ncei.noaa.gov/pub/data/noaa/>
+  - `get_weather_data`:
+      - This function loads and cleans weather data for a given NOAA
+        station ID and year. It returns a dataframe containing a time
+        series of air temperature, atmospheric pressure, wind speed, and
+        wind direction.
+  - `plot_weather_data`:
+      - This function visualizes the weather station observations
+        including air temperature, atmospheric pressure, wind speed, and
+        wind direction changing over time.
+        
+        
+
+## Installation
+
+You can install the development version of this package from [GitHub](https://github.com/) with:
+
+```r
+install.packages("devtools")
+devtools::install_github("UBC-MDS/noaastnr")
+```
+## Load the Package
+
+You can load the package with:
+
+```{r setup}
+library(noaastnr)
+```
+
+## Usage
+
+Typical usage will begin with downloading the list of available weather stations in the country of interest using the `get_stations_info()` function.  A dataframe is returned which can be reviewed to find a suitable station in the area of interest.  Alternatively, the NOAA provides a [graphical interface](https://gis.ncdc.noaa.gov/maps/ncei/cdo/hourly) for exploring the available weather stations.
+
+```{r get_station_info, warning=FALSE}
+get_stations_info(country = "US")
+```
+
+After selecting a weather station number, the `get_weather_data()` function can be used to download various weather parameters for the station number and year of interest.  The following usage example downloads weather data from station number "911650-22536" for the year 2020 and saves the data to a variable called 'weather_data'.  'weather_data' will be a data frame containing a time series of the following parameters for the station and year of interest:
+
+- air temperature (degrees Celsius)
+- atmospheric pressure (hectopascals)
+- wind speed (m/s)
+- wind direction (angular degrees)
+
+```{r get_weather_data, warning=FALSE}
+weather_data <- get_weather_data("911650-22536", 2020)
+weather_data
+```
+
+The function `plot_weather_data()` can be used to visualize a time series of any of the available weather parameters either on a mean daily or mean monthly basis.  The function returns an Altair chart object which can be saved or displayed in any environment which can render Altair objects.
+
+```{r plot_weather_data, warning=FALSE}
+# weather_data <- get_weather_data("911650-22536", 2020)
+plot_weather_data(weather_data, col_name="air_temp", time_basis="monthly")
+```
