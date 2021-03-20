@@ -20,10 +20,10 @@ station for a given year, extract several key weather parameters from
 the raw data files, and visualize the variation in these parameters over
 time. The weather parameters that are extracted with this package are:
 
--   Air Temperature (degrees Celsius)
--   Atmospheric Pressure (hectopascals)
--   Wind Speed (m/s)
--   Wind Direction (angular degrees)
+  - Air Temperature (degrees Celsius)
+  - Atmospheric Pressure (hectopascals)
+  - Wind Speed (m/s)
+  - Wind Direction (angular degrees)
 
 ## Installation
 
@@ -37,16 +37,16 @@ devtools::install_github("UBC-MDS/noaastnr")
 
 ## Features
 
--   `get_stations_info`:
-    -   This function downloads and cleans the data of all stations
+  - `get_stations_info`:
+      - This function downloads and cleans the data of all stations
         available at <ftp://ftp.ncei.noaa.gov/pub/data/noaa/>
--   `get_weather_data`:
-    -   This function loads and cleans weather data for a given NOAA
+  - `get_weather_data`:
+      - This function loads and cleans weather data for a given NOAA
         station ID and year. It returns a dataframe containing a time
         series of air temperature, atmospheric pressure, wind speed, and
         wind direction.
--   `plot_weather_data`:
-    -   This function visualizes the weather station observations
+  - `plot_weather_data`:
+      - This function visualizes the weather station observations
         including air temperature, atmospheric pressure, wind speed, and
         wind direction changing over time.
 
@@ -75,3 +75,9 @@ Please note that the noaastnr project is released with a [Contributor
 Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
+
+## Contributors
+
+We welcome and recognize all contributions. You can see a list of
+current contributors in the [contributors
+tab](https://github.com/UBC-MDS/noaastnr/graphs/contributors).
