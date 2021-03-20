@@ -36,5 +36,6 @@ Imports:
     tidyr,
     rlang,
     readr,
-    utils
+    utils,
+    qpdf
 VignetteBuilder: knitr
