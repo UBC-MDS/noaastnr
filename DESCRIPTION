@@ -1,6 +1,6 @@
 Package: noaastnr
 Title: R Package that Downloads, Processes and Visualizes Weather Data from NOAA Website
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: 
     c(person(given = "Chen",
            family = "Zhao",
