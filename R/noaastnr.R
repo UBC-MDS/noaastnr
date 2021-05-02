@@ -122,29 +122,17 @@ get_weather_data <- function(station_number, year) {
       '\n'
     ))
 
-  # Create data frame for weather observations
-  stn_year_df <-
-    tibble::tibble(
-      stn = character(),
-      datetime = as.POSIXct(NA),
-      air_temp = numeric(),
-      atm_press = numeric(),
-      wind_spd = numeric(),
-      wind_dir = numeric()
-    )
+  # Vectorized with stringr - long string becomes "value" column
+  stn_year_df <- dplyr::as_tibble(data)
+  stn_year_df <- dplyr::mutate(stn_year_df,
+                               stn = station_number,
+                               datetime = lubridate::ymd_hm(as.numeric(substr(stn_year_df$value, 16, 27))),
+                               air_temp = as.numeric(stringr::str_sub(stn_year_df$value, 88, 92)),
+                               atm_press = as.numeric(stringr::str_sub(stn_year_df$value, 100, 104)) / 10,
+                               wind_spd = as.numeric(stringr::str_sub(stn_year_df$value, 66, 69)) / 10,
+                               wind_dir = as.numeric(stringr::str_sub(stn_year_df$value, 61, 63)))
 
-  # Populate weather observations data frame from raw data
-  for (i in seq_along(data)) {
-    stn_year_df <- tibble::add_row(
-      stn_year_df,
-      stn = station_number,
-      datetime = lubridate::ymd_hm(as.numeric(substr(data[i], 16, 27))),
-      air_temp = as.numeric(substr(data[i], 88, 92)),
-      atm_press = as.numeric(substr(data[i], 100, 104)) / 10,
-      wind_spd = as.numeric(substr(data[i], 66, 69)) / 10,
-      wind_dir = as.numeric(substr(data[i], 61, 63))
-    )
-  }
+  stn_year_df <- stn_year_df[,!names(stn_year_df)=="value"]
 
   stn_year_df[stn_year_df == 999] <- NA
   stn_year_df[stn_year_df == 999.9] <- NA

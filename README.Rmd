@@ -43,6 +43,10 @@ devtools::install_github("UBC-MDS/noaastnr")
 - `plot_weather_data`:
   - This function visualizes the weather station observations including air temperature, atmospheric pressure, wind speed, and wind direction changing over time.
 
+## USAGE
+
+A more detailed information about the usage of the features can be found at [DOCUMENTATION](https://ubc-mds.github.io/noaastnr/articles/noaastnr.html) 
+
 ## Dependancies
 
 The list of the dependencies for this package can be viewed under `Imports:` at [DESCRIPTION](https://github.com/UBC-MDS/noaastnr/blob/main/DESCRIPTION)
