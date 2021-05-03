@@ -50,7 +50,7 @@ weather_data <- get_weather_data("911650-22536", 2020)
 weather_data
 ```
 
-The function `plot_weather_data()` can be used to visualize a time series of any of the available weather parameters either on a mean daily or mean monthly basis.  The function returns an Altair chart object which can be saved or displayed in any environment which can render Altair objects.
+The function `plot_weather_data()` can be used to visualize a time series of any of the available weather parameters either on a mean daily or mean monthly basis.  The function returns an ggplot object which can be saved or displayed in any environment which can render ggplot objects.
 
 ```{r plot_weather_data, warning=FALSE}
 # weather_data <- get_weather_data("911650-22536", 2020)

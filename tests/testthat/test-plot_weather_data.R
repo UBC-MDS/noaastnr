@@ -52,23 +52,23 @@ test_that("Date should be mapped to the x axis", {
 })
 
 test_that("air_temp should be mapped to the y axis", {
-  expect_true("air_temp" == rlang::get_expr(plot_at_m$mapping$y))
-  expect_true("air_temp" == rlang::get_expr(plot_at_d$mapping$y))
+  expect_true('.data[["air_temp"]]' == rlang::get_expr(plot_at_m$mapping$y))
+  expect_true('.data[["air_temp"]]' == rlang::get_expr(plot_at_d$mapping$y))
 })
 
 test_that("atm_press should be mapped to the y axis", {
-  expect_true("atm_press" == rlang::get_expr(plot_ap_m$mapping$y))
-  expect_true("atm_press" == rlang::get_expr(plot_ap_d$mapping$y))
+  expect_true('.data[["atm_press"]]' == rlang::get_expr(plot_ap_m$mapping$y))
+  expect_true('.data[["atm_press"]]' == rlang::get_expr(plot_ap_d$mapping$y))
 })
 
 test_that("wind_spd should be mapped to the y axis", {
-  expect_true("wind_spd" == rlang::get_expr(plot_ws_m$mapping$y))
-  expect_true("wind_spd" == rlang::get_expr(plot_ws_d$mapping$y))
+  expect_true('.data[["wind_spd"]]' == rlang::get_expr(plot_ws_m$mapping$y))
+  expect_true('.data[["wind_spd"]]' == rlang::get_expr(plot_ws_d$mapping$y))
 })
 
 test_that("wind_dir should be mapped to the y axis", {
-  expect_true("wind_dir" == rlang::get_expr(plot_wd_m$mapping$y))
-  expect_true("wind_dir" == rlang::get_expr(plot_wd_d$mapping$y))
+  expect_true('.data[["wind_dir"]]' == rlang::get_expr(plot_wd_m$mapping$y))
+  expect_true('.data[["wind_dir"]]' == rlang::get_expr(plot_wd_d$mapping$y))
 })
 
 # Test plot configurations
