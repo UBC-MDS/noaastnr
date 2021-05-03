@@ -14,8 +14,8 @@ The US National Oceanic and Atmospheric Administration (NOAA) collects
 and provides access to weather data from land-based weather stations
 within the US and around the world ([Land-Based Station
 Data](https://www.ncdc.noaa.gov/data-access/land-based-station-data)).
-One method for accessing these data is through a publically accessible
-FTP site. This package allows users to easily download data from a given
+One method for accessing these data is through a publicly accessible FTP
+site. This package allows users to easily download data from a given
 station for a given year, extract several key weather parameters from
 the raw data files, and visualize the variation in these parameters over
 time. The weather parameters that are extracted with this package are:
@@ -86,4 +86,6 @@ By contributing to this project, you agree to abide by its terms.
 
 We welcome and recognize all contributions. You can see a list of
 current contributors in the [contributors
-tab](https://github.com/UBC-MDS/noaastnr/graphs/contributors).
+tab](https://github.com/UBC-MDS/noaastnr/graphs/contributors). The
+package was originally developed by Chen Zhao, Chirag Rank, and Steffen
+Pentelow.

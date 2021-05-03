@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/UBC-MDS/noaastnr/workflows/R-CMD-check/badge.svg)](https://github.com/UBC-MDS/noaastnr/actions) [![codecov](https://codecov.io/gh/UBC-MDS/noaastnr/branch/main/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/noaastnr)
 <!-- badges: end -->
 
-The US National Oceanic and Atmospheric Administration (NOAA) collects and provides access to weather data from land-based weather stations within the US and around the world ([Land-Based Station Data](https://www.ncdc.noaa.gov/data-access/land-based-station-data)).  One method for accessing these data is through a publically accessible FTP site.  This package allows users to easily download data from a given station for a given year, extract several key weather parameters from the raw data files, and visualize the variation in these parameters over time.  The weather parameters that are extracted with this package are:
+The US National Oceanic and Atmospheric Administration (NOAA) collects and provides access to weather data from land-based weather stations within the US and around the world ([Land-Based Station Data](https://www.ncdc.noaa.gov/data-access/land-based-station-data)).  One method for accessing these data is through a publicly accessible FTP site.  This package allows users to easily download data from a given station for a given year, extract several key weather parameters from the raw data files, and visualize the variation in these parameters over time.  The weather parameters that are extracted with this package are:
 
 - Air Temperature (degrees Celsius)
 - Atmospheric Pressure (hectopascals)
@@ -61,4 +61,4 @@ Please note that the noaastnr project is released with a [Contributor Code of Co
 
 ## Contributors
 
-We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/UBC-MDS/noaastnr/graphs/contributors).
+We welcome and recognize all contributions. You can see a list of current contributors in the [contributors tab](https://github.com/UBC-MDS/noaastnr/graphs/contributors). The package was originally developed by Chen Zhao, Chirag Rank, and Steffen Pentelow.

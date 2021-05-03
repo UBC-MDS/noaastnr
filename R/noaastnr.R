@@ -100,7 +100,7 @@ get_weather_data <- function(station_number, year) {
   if (!is.character(station_number)) {
     stop("Station number must be entered as a string.")
   }
-  if (!stringr::str_detect(station_number, "^[0-9]{6}[-][0-9]{5}$")) {
+  if (!stringr::str_detect(station_number, "^[A-z|0-9][0-9]{5}[-][0-9]{5}$")) {
     stop(
       "Station number must be entered in form '911650-22536'.  See documentation for additional details."
     )
@@ -159,7 +159,8 @@ get_weather_data <- function(station_number, year) {
 plot_weather_data <- function(obs_df, col_name, time_basis) {
   # Define global variables
   datetime <-
-    air_temp <- atm_press <- wind_spd <- wind_dir <- month <- NULL
+    air_temp <-
+    atm_press <- wind_spd <- wind_dir <- month <- .data <- NULL
   # Test input types
   if (!is.data.frame(obs_df)) {
     stop("Weather data should be a dataFrame.")
@@ -183,6 +184,13 @@ plot_weather_data <- function(obs_df, col_name, time_basis) {
   year <-
     lubridate::year(lubridate::floor_date(df$datetime, "year")[1])
 
+  title_list <- list(
+    air_temp = "Air Temperature",
+    atm_press = "Atmospheric Pressure",
+    wind_spd = "Wind Speed",
+    wind_dir = "Wind Direction"
+  )
+
   if (time_basis == "monthly") {
     df <-
       dplyr::group_by(df, month = lubridate::floor_date(datetime, "month"))
@@ -199,47 +207,18 @@ plot_weather_data <- function(obs_df, col_name, time_basis) {
       stop("Dataset is not sufficient to visualize.")
     }
 
-    if (col_name == "air_temp") {
-      title_text <- paste("Air Temperature for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(month), y = air_temp)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Month") +
-        ggplot2::ylab("Air Temperature")
-    } else if (col_name == "atm_press") {
-      title_text <- paste("Atmospheric Pressure for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(month), y = atm_press)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Month") +
-        ggplot2::ylab("Atmospheric Pressure")
-    } else if (col_name == "wind_spd") {
-      title_text <- paste("Wind Speed for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(month), y = wind_spd)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Month") +
-        ggplot2::ylab("Wind Speed")
-    } else {
-      title_text <- paste("Wind Direction for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(month), y = wind_dir)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Month") +
-        ggplot2::ylab("Wind Direction")
-    }
-
-  } else {
+    title_text <- paste(title_list[[col_name]], " for ", year)
+    line <-
+      ggplot2::ggplot(df, ggplot2::aes(x = as.Date(month), y = .data[[col_name]])) +
+      ggplot2::geom_line(color = "orange") +
+      ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+      ggplot2::ggtitle(title_text) +
+      ggplot2::xlab("Month") +
+      ggplot2::ylab(title_list[[col_name]])
+  }
+  else {
     df <-
-      dplyr::group_by(df, month = lubridate::floor_date(datetime, "day"))
+      dplyr::group_by(df, date = lubridate::floor_date(datetime, "day"))
     df <-
       dplyr::summarise(
         df,
@@ -253,43 +232,14 @@ plot_weather_data <- function(obs_df, col_name, time_basis) {
       stop("Dataset is not sufficient to visualize.")
     }
 
-    if (col_name == "air_temp") {
-      title_text <- paste("Air Temperature for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(date), y = air_temp)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Date") +
-        ggplot2::ylab("Air Temperature")
-    } else if (col_name == "atm_press") {
-      title_text <- paste("Atmospheric Pressure for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(date), y = atm_press)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Date") +
-        ggplot2::ylab("Atmospheric Pressure")
-    } else if (col_name == "wind_spd") {
-      title_text <- paste("Wind Speed for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(date), y = wind_spd)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Date") +
-        ggplot2::ylab("Wind Speed")
-    } else {
-      title_text <- paste("Wind Direction for ", year)
-      line <-
-        ggplot2::ggplot(df, ggplot2::aes(x = as.Date(date), y = wind_dir)) +
-        ggplot2::geom_line(color = "orange") +
-        ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
-        ggplot2::ggtitle(title_text) +
-        ggplot2::xlab("Date") +
-        ggplot2::ylab("Wind Direction")
-    }
+    title_text <- paste(title_list[[col_name]], " for ", year)
+    line <-
+      ggplot2::ggplot(df, ggplot2::aes(x = as.Date(date), y = .data[[col_name]])) +
+      ggplot2::geom_line(color = "orange") +
+      ggplot2::scale_x_date(date_labels = "%b", date_breaks = "1 month") +
+      ggplot2::ggtitle(title_text) +
+      ggplot2::xlab("Date") +
+      ggplot2::ylab(title_list[[col_name]])
   }
 
   chart <- line +
